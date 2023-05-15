@@ -26,7 +26,7 @@ import {
 } from "react-router-dom";
 //import Layout from "./components/Layout";
 import Home from "./pages/Home";
-import "./styles/main.css";
+import "./utils/main.css";
 
 const router = createBrowserRouter(
   createRoutesFromElements(

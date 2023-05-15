@@ -1,15 +1,24 @@
-import Header from "../components/header/Header";
-import Sidebar from "../components/sidebar/Sidebar";
-import Profile from "../components/profile/Profile";
-import BarChart from "../components/bar-chart/BarChart";
-import LineChart from "../components/line-chart/LineChart";
-import RadarChart from "../components/radar-chart/RadarChart";
-import RadialBarChart from "../components/radial-bar-chart/RadialBarChart";
-import FigureCard from "../components/figure-card/FigureCard";
-import proteins from "../assets/protein-icon.png";
-import calories from "../assets/calories-icon.png";
-import carbs from "../assets/carbs-icon.png";
-import fat from "../assets/fat-icon.png";
+import styled from "styled-components";
+import Header from "../components/Header";
+import Sidebar from "../components/Sidebar";
+import Profile from "../components/Profile";
+import BarC from "../components/BarChart";
+import LineC from "../components/LineChart";
+import RadarC from "../components/RadarChart";
+import RadialBarChart from "../components/RadialBarChart";
+import FigureCard from "../components/FigureCard";
+import proteinsIcon from "../assets/protein-icon.png";
+import caloriesIcon from "../assets/calories-icon.png";
+import carbsIcon from "../assets/carbs-icon.png";
+import fatIcon from "../assets/fat-icon.png";
+
+import { USER_MAIN_DATA } from "../mocked-data/data";
+
+const calories = USER_MAIN_DATA[0].keyData.calorieCount.toLocaleString("en-US");
+const proteins = USER_MAIN_DATA[0].keyData.proteinCount.toLocaleString("en-US");
+const carbohydrates =
+  USER_MAIN_DATA[0].keyData.carbohydrateCount.toLocaleString("en-US");
+const lipids = USER_MAIN_DATA[0].keyData.lipidCount.toLocaleString("en-US");
 
 export default function Home() {
   return (
@@ -20,31 +29,56 @@ export default function Home() {
       <div className="container">
         <Profile />
 
-        <main className="user-data">
-          <section className="graphs">
-            <BarChart />
-            <div className="graph-line2">
-              <LineChart />
-              <RadarChart />
+        <UserDataWrapper>
+          <UserGraphs>
+            {/* <BarC /> */}
+            <LineC />
+            <SmallerGraphs>
+              <div>
+                <LineC />
+              </div>
+              <RadarC />
               <RadialBarChart />
-            </div>
-          </section>
+            </SmallerGraphs>
+          </UserGraphs>
           <section className="figures_overview">
             <FigureCard
               title={"Calories"}
-              figure={"calories"}
-              icon={calories}
+              figure={`${calories}kCal`}
+              icon={caloriesIcon}
             />
             <FigureCard
               title={"Protéines"}
-              figure={"protéines"}
-              icon={proteins}
+              figure={`${proteins}g`}
+              icon={proteinsIcon}
             />
-            <FigureCard title={"Glucides"} figure={"glucides"} icon={carbs} />
-            <FigureCard title={"Lipides"} figure={"lipides"} icon={fat} />
+            <FigureCard
+              title={"Glucides"}
+              figure={`${carbohydrates}g`}
+              icon={carbsIcon}
+            />
+            <FigureCard
+              title={"Lipides"}
+              figure={`${lipids}g`}
+              icon={fatIcon}
+            />
           </section>
-        </main>
+        </UserDataWrapper>
       </div>
     </div>
   );
 }
+
+const UserDataWrapper = styled.main`
+  display: flex;
+  justify-content: space-between;
+  margin-top: 80px;
+`;
+
+const UserGraphs = styled.section`
+  width: 70%;
+`;
+
+const SmallerGraphs = styled.div`
+  display: flex;
+`;
