@@ -1,3 +1,15 @@
+import { USER_ACTIVITY } from "../mocked-data/data";
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  Label,
+  ResponsiveContainer,
+} from "recharts";
 import styled from "styled-components";
 import { colors } from "../utils/variables";
 
@@ -9,74 +21,38 @@ import { colors } from "../utils/variables";
 //   );
 // }
 
-import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
-  Text,
-} from "recharts";
-
-const data = [
-  {
-    day: "2020-07-01",
-    kilogram: 80,
-    calories: 240,
-  },
-  {
-    day: "2020-07-02",
-    kilogram: 80,
-    calories: 220,
-  },
-  {
-    day: "2020-07-03",
-    kilogram: 81,
-    calories: 280,
-  },
-  {
-    day: "2020-07-04",
-    kilogram: 81,
-    calories: 290,
-  },
-  {
-    day: "2020-07-05",
-    kilogram: 80,
-    calories: 160,
-  },
-  {
-    day: "2020-07-06",
-    kilogram: 78,
-    calories: 162,
-  },
-  {
-    day: "2020-07-07",
-    kilogram: 76,
-    calories: 390,
-  },
-];
+const activites = USER_ACTIVITY[0].sessions;
 
 export default function BarC() {
   return (
     <ResponsiveContainer width="90%" height="50%">
-      <BarChart width={500} height={300} data={data} barGap={10}>
-        <XAxis tickLine={false} />
+      <BarChart width={500} height={500} data={activites} barGap={10}>
+        {/* <text>
+          <tspan x="10" y="9" dy="0.71em">
+            Activité quotidienne
+          </tspan>
+        </text> */}
+        <XAxis tickLine={false} tickFormatter={formatXAxis} />
+
         <YAxis
           orientation="right"
           tickCount={3}
           axisLine={false}
           tickLine={false}
         />
-        <Tooltip offset={75} />
+        <Tooltip
+          offset={75}
+          itemStyle={{ color: "#ffffff" }}
+          contentStyle={{ backgroundColor: "#E60000" }}
+          label={""}
+        />
         <CartesianGrid strokeDasharray="4" vertical={false} />
         <Legend
           verticalAlign="top"
           align="right"
           iconType="circle"
           iconSize={12}
+          wrapperStyle={{ top: -50 }}
         />
         <Bar
           name="Poids (kg)"
@@ -89,10 +65,21 @@ export default function BarC() {
           name="Calories brûlées (kCal)"
           dataKey="calories"
           barSize={12}
-          fill="#ff0101"
+          fill="#E60000"
           radius={[5, 5, 0, 0]}
         />
       </BarChart>
     </ResponsiveContainer>
   );
 }
+
+function formatXAxis(value) {
+  // console.log(value);
+  return value + 1;
+}
+
+const renderColorfulLegendText = (value: string, entry: any) => {
+  const { color } = entry;
+
+  return <span style={{ color }}>{value}</span>;
+};

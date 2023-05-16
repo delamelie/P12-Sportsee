@@ -15,7 +15,7 @@ export default function Profile() {
 }
 
 const ProfileWrapper = styled.div`
-  margin-top: 60px;
+  margin: 60px 0 180px 0;
 `;
 
 const ProfileName = styled.h1`

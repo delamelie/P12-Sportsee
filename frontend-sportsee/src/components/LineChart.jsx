@@ -6,90 +6,61 @@
 //   );
 // }
 
-import React, { PureComponent } from "react";
+import { USER_AVERAGE_SESSIONS } from "../mocked-data/data";
 import {
   LineChart,
   Line,
   XAxis,
   YAxis,
-  CartesianGrid,
   Tooltip,
-  Legend,
   ResponsiveContainer,
 } from "recharts";
 
-const data = [
-  {
-    name: "Page A",
-    uv: 4000,
-    pv: 2400,
-    amt: 2400,
-  },
-  {
-    name: "Page B",
-    uv: 3000,
-    pv: 1398,
-    amt: 2210,
-  },
-  {
-    name: "Page C",
-    uv: 2000,
-    pv: 9800,
-    amt: 2290,
-  },
-  {
-    name: "Page D",
-    uv: 2780,
-    pv: 3908,
-    amt: 2000,
-  },
-  {
-    name: "Page E",
-    uv: 1890,
-    pv: 4800,
-    amt: 2181,
-  },
-  {
-    name: "Page F",
-    uv: 2390,
-    pv: 3800,
-    amt: 2500,
-  },
-  {
-    name: "Page G",
-    uv: 3490,
-    pv: 4300,
-    amt: 2100,
-  },
-];
+const averageSessions = USER_AVERAGE_SESSIONS[0].sessions;
 
 export default function LineC() {
   return (
     <ResponsiveContainer width="50%" height="50%">
       <LineChart
         width={500}
-        height={300}
-        data={data}
+        height={500}
+        data={averageSessions}
         margin={{
-          top: 5,
+          top: 15,
           right: 30,
           left: 20,
           bottom: 5,
         }}
       >
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="name" />
-        <YAxis />
+        <XAxis
+          dataKey="day"
+          axisLine={false}
+          tickLine={false}
+          tickFormatter={formatXAxis}
+        />
+
+        <YAxis axisLine={false} hide={true} />
         <Tooltip />
-        <Legend />
+
         <Line
           type="monotone"
-          dataKey="pv"
+          // type="basis"
+          dataKey="sessionLength"
           stroke="#8884d8"
-          activeDot={{ r: 8 }}
+          dot={false}
+          // activeDot={{ strokeWidth: 2, r: 10 }}
+          activeDot={{ stroke: "#ff0101", strokeWidth: 5, r: 7 }}
         />
-        <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
       </LineChart>
     </ResponsiveContainer>
   );
+}
+
+function formatXAxis(value) {
+  console.log(value);
+  const days = ["L", "M", "M", "J", "V", "S", "D"];
+
+  if (value >= 1 && value <= 7) {
+    return days[value - 1];
+  }
 }

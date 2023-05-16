@@ -32,12 +32,12 @@ export default function Home() {
         <UserDataWrapper>
           <UserGraphs>
             {/* <BarC /> */}
-            <LineC />
+            {/* <LineC /> */}
+            <RadarC />
+
             <SmallerGraphs>
-              <div>
-                <LineC />
-              </div>
-              <RadarC />
+              <LineC />
+              {/* <RadarC /> */}
               <RadialBarChart />
             </SmallerGraphs>
           </UserGraphs>
