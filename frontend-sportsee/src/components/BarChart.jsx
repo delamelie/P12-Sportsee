@@ -7,31 +7,19 @@ import {
   CartesianGrid,
   Tooltip,
   Legend,
-  Label,
   ResponsiveContainer,
 } from "recharts";
-import styled from "styled-components";
-import { colors } from "../utils/variables";
-
-// export default function BarChart() {
-//   return (
-//     <div className="daily-activity">
-//       <h2>Activité quotidienne</h2>
-//     </div>
-//   );
-// }
 
 const activites = USER_ACTIVITY[0].sessions;
 
 export default function BarC() {
   return (
-    <ResponsiveContainer width="90%" height="50%">
-      <BarChart width={500} height={500} data={activites} barGap={10}>
-        {/* <text>
-          <tspan x="10" y="9" dy="0.71em">
-            Activité quotidienne
-          </tspan>
-        </text> */}
+    <ResponsiveContainer width="100%" height="50%">
+      <BarChart data={activites} barGap={10}>
+        <text className="graph__title" x="2%" y="10%" style={{ fontSize: 15 }}>
+          Activité quotidienne
+        </text>
+
         <XAxis tickLine={false} tickFormatter={formatXAxis} />
 
         <YAxis
@@ -43,16 +31,17 @@ export default function BarC() {
         <Tooltip
           offset={75}
           itemStyle={{ color: "#ffffff" }}
-          contentStyle={{ backgroundColor: "#E60000" }}
-          label={""}
+          contentStyle={{ backgroundColor: "#E60000", fontSize: "7px" }}
+          wrapperStyle={{ width: "40px" }}
         />
         <CartesianGrid strokeDasharray="4" vertical={false} />
         <Legend
           verticalAlign="top"
           align="right"
           iconType="circle"
-          iconSize={12}
-          wrapperStyle={{ top: -50 }}
+          iconSize={10}
+          wrapperStyle={{ fontSize: "14px" }}
+          // wrapperStyle={{ top: -50 }}
         />
         <Bar
           name="Poids (kg)"
@@ -78,8 +67,8 @@ function formatXAxis(value) {
   return value + 1;
 }
 
-const renderColorfulLegendText = (value: string, entry: any) => {
-  const { color } = entry;
+// const renderColorfulLegendText = (value: string, entry: any) => {
+//   const { color } = entry;
 
-  return <span style={{ color }}>{value}</span>;
-};
+//   return <span style={{ color }}>{value}</span>;
+// };

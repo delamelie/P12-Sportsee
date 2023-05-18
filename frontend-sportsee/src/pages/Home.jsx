@@ -5,7 +5,7 @@ import Profile from "../components/Profile";
 import BarC from "../components/BarChart";
 import LineC from "../components/LineChart";
 import RadarC from "../components/RadarChart";
-import RadialBarChart from "../components/RadialBarChart";
+import RadialBarC from "../components/RadialBarChart";
 import FigureCard from "../components/FigureCard";
 import proteinsIcon from "../assets/protein-icon.png";
 import caloriesIcon from "../assets/calories-icon.png";
@@ -31,16 +31,14 @@ export default function Home() {
 
         <UserDataWrapper>
           <UserGraphs>
-            {/* <BarC /> */}
-            {/* <LineC /> */}
-            <RadarC />
-
+            <BarC />
             <SmallerGraphs>
               <LineC />
-              {/* <RadarC /> */}
-              <RadialBarChart />
+              <RadarC />
+              <RadialBarC />
             </SmallerGraphs>
           </UserGraphs>
+
           <section className="figures_overview">
             <FigureCard
               title={"Calories"}
@@ -72,13 +70,16 @@ export default function Home() {
 const UserDataWrapper = styled.main`
   display: flex;
   justify-content: space-between;
-  margin-top: 80px;
+  // border: 3px solid green;
 `;
 
 const UserGraphs = styled.section`
   width: 70%;
+  // border: 3px solid pink;
 `;
 
 const SmallerGraphs = styled.div`
   display: flex;
+  margin-top: 50px;
+  // border: 3px solid blue;
 `;
