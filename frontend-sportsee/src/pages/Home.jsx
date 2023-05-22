@@ -1,19 +1,79 @@
+import { USER_MAIN_DATA } from "../mocked-data/data";
+import { USER_ACTIVITY } from "../mocked-data/data";
+import { USER_PERFORMANCE } from "../mocked-data/data";
+import { USER_AVERAGE_SESSIONS } from "../mocked-data/data";
+
 import styled from "styled-components";
 import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
 import Profile from "../components/Profile";
-import BarC from "../components/BarChart";
-import LineC from "../components/LineChart";
-import RadarC from "../components/RadarChart";
-import RadialBarC from "../components/RadialBarChart";
+import BarC from "../components/bar-chart/BarChart";
+import LineC from "../components/line-chart/LineChart";
+import RadarC from "../components/radar-chart/RadarChart";
+import RadialBarC from "../components/radial-bar-chart/RadialBarChart";
 import FigureCard from "../components/FigureCard";
 import proteinsIcon from "../assets/protein-icon.png";
 import caloriesIcon from "../assets/calories-icon.png";
 import carbsIcon from "../assets/carbs-icon.png";
 import fatIcon from "../assets/fat-icon.png";
 
-import { USER_MAIN_DATA } from "../mocked-data/data";
+// Retrieve user's first name to display inside Profile component
+const firstName = USER_MAIN_DATA[0].userInfos.firstName;
 
+// Retrieve user's kilograms and calories to display inside BarChart component
+const activities = USER_ACTIVITY[0].sessions;
+
+// Retrieve user's average session value to display inside LineChart component
+const averageSessions = USER_AVERAGE_SESSIONS[0].sessions;
+
+// Retrieve user's performances' values to display inside RadarChart component
+const perf = USER_PERFORMANCE[0].data;
+const labels = USER_PERFORMANCE[0].kind;
+
+// Create separate array for labels
+const labelsArray = [];
+Object.keys(labels).forEach((key) => {
+  labelsArray.push({
+    kind: key,
+    name: labels[key],
+  });
+});
+console.log(labelsArray);
+
+///Translate labels
+labelsArray.forEach((item) => {
+  if (item.name === "cardio") {
+    item.name = "Cardio";
+  } else if (item.name === "energy") {
+    item.name = "Energie";
+  } else if (item.name === "endurance") {
+    item.name = "Endurance";
+  } else if (item.name === "intensity") {
+    item.name = "Intensité";
+  } else if (item.name === "strength") {
+    item.name = "Force";
+  } else if (item.name === "speed") {
+    item.name = "Vitesse";
+  }
+});
+
+/// Merge data from those 2 arrays
+const labelsObject = labelsArray.reduce((accumulator, item) => {
+  accumulator[item.kind] = item;
+  return accumulator;
+}, {});
+console.log(labelsObject);
+
+let performances = perf.map((item) =>
+  Object.assign(item, labelsObject[item.kind])
+);
+
+// Retrieve user's score and convert into % to display inside RadialBarChart component
+const scoreFigure = USER_MAIN_DATA[0].todayScore;
+const scorePercentage = scoreFigure * 100;
+const percentageArray = [{ scorePercentage }];
+
+// Retrieve user's personal figures and format them to display inside FigureCard component
 const calories = USER_MAIN_DATA[0].keyData.calorieCount.toLocaleString("en-US");
 const proteins = USER_MAIN_DATA[0].keyData.proteinCount.toLocaleString("en-US");
 const carbohydrates =
@@ -27,15 +87,18 @@ export default function Home() {
       <Sidebar />
 
       <div className="container">
-        <Profile />
+        <Profile name={firstName} />
 
         <UserDataWrapper>
           <UserGraphs>
-            <BarC />
+            <BarC activities={activities} />
             <SmallerGraphs>
-              <LineC />
-              <RadarC />
-              <RadialBarC />
+              <LineC sessions={averageSessions} />
+              <RadarC performances={performances} />
+              <RadialBarC
+                scorePercentage={scorePercentage}
+                percentageArray={percentageArray}
+              />
             </SmallerGraphs>
           </UserGraphs>
 
@@ -80,6 +143,7 @@ const UserGraphs = styled.section`
 
 const SmallerGraphs = styled.div`
   display: flex;
+  justify-content: space-between;
   margin-top: 50px;
   // border: 3px solid blue;
 `;
