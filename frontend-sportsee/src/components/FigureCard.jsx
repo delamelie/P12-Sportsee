@@ -1,10 +1,11 @@
+import PropTypes from "prop-types";
 import styled from "styled-components";
 import { colors } from "../utils/variables";
 
 export default function FigureCard({ icon, figure, title }) {
   return (
     <CardWrapper>
-      <img src={icon} alt="" className="icon" />
+      <Icon src={icon} alt="" />
       <CardDescription>
         <CardFigure>{figure}</CardFigure>
         <CardTitle>{title}</CardTitle>
@@ -12,6 +13,12 @@ export default function FigureCard({ icon, figure, title }) {
     </CardWrapper>
   );
 }
+
+FigureCard.propTypes = {
+  icon: PropTypes.string.isRequired,
+  figure: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+};
 
 const CardWrapper = styled.div`
   display: flex;
@@ -38,9 +45,9 @@ const CardTitle = styled.span`
   color: ${colors.light_grey};
 `;
 
-// .icon {
-//   width: 60px;
-//   height: 60px;
-//   margin-left: 40px;
-//   border-radius: 6px;
-// }
+const Icon = styled.img`
+  width: 60px;
+  height: 60px;
+  margin-left: 40px;
+  border-radius: 6px;
+`;

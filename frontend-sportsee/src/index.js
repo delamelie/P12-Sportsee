@@ -1,21 +1,3 @@
-// import React from "react";
-// import ReactDOM from "react-dom/client";
-// import "./index.css";
-// import Header from "./components/Header";
-// import reportWebVitals from "./reportWebVitals";
-
-// const root = ReactDOM.createRoot(document.getElementById("root"));
-// root.render(
-//   <React.StrictMode>
-//     <Header />
-//   </React.StrictMode>
-// );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-//reportWebVitals();
-
 import React from "react";
 import ReactDOM from "react-dom/client";
 import {
@@ -26,7 +8,7 @@ import {
 } from "react-router-dom";
 //import Layout from "./components/Layout";
 import Home from "./pages/Home";
-import "./utils/main.css";
+import { GlobalStyle } from "./utils/GlobalStyle";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -44,5 +26,6 @@ const router = createBrowserRouter(
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <RouterProvider router={router} />
+    <GlobalStyle />
   </React.StrictMode>
 );

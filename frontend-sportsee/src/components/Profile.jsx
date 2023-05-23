@@ -1,4 +1,5 @@
 // import { USER_MAIN_DATA } from "../mocked-data/data";
+import PropTypes from "prop-types";
 import styled from "styled-components";
 import { colors } from "../utils/variables";
 
@@ -11,14 +12,18 @@ export default function Profile({ name }) {
         Bonjour <ProfileName>{name}</ProfileName>
       </ProfileTitle>
       <ProfileCongrats>
-        Félicitation ! Vous avez explosé vos objectifs hier 👏
+        Félicitations ! Vous avez explosé vos objectifs hier 👏
       </ProfileCongrats>
     </ProfileWrapper>
   );
 }
 
+Profile.propTypes = {
+  name: PropTypes.string.isRequired,
+};
+
 const ProfileWrapper = styled.div`
-  margin: 60px 0 180px 0;
+  margin: 60px 0 90px 0;
 `;
 
 const ProfileTitle = styled.h1`
