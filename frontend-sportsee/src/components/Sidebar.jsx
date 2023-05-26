@@ -5,6 +5,11 @@ import swimmingIcon from "../assets/swimming.png";
 import cyclingIcon from "../assets/cycling.png";
 import fitnessIcon from "../assets/fitness.png";
 
+/**
+ * Render sidebar
+ * @return { JSX }
+ */
+
 export default function Sidebar() {
   return (
     <SidebarWrapper>
@@ -42,7 +47,7 @@ const SidebarWrapper = styled.div`
   justify-content: space-around;
   align-items: center;
   width: 117px;
-  height: 100vh;
+  height: 110vh;
   background-color: ${colors.black};
 `;
 

@@ -2,6 +2,14 @@ import PropTypes from "prop-types";
 import styled from "styled-components";
 import { colors } from "../utils/variables";
 
+/**
+ * Render key figures (calories, proteins, carbohydrates, fat)
+ * @param { String } icon
+ * @param { String } figure
+ * @param { String } title
+ * @return { JSX }
+ */
+
 export default function FigureCard({ icon, figure, title }) {
   return (
     <CardWrapper>
@@ -23,7 +31,6 @@ FigureCard.propTypes = {
 const CardWrapper = styled.div`
   display: flex;
   align-items: center;
-  width: 258px;
   height: 124px;
   background-color: ${colors.light_background};
 `;

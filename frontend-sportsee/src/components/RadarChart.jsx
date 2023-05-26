@@ -10,6 +10,12 @@ import PropTypes from "prop-types";
 import styled from "styled-components";
 import { colors } from "../utils/variables";
 
+/**
+ * Render performances chart
+ * @param { Array } performances
+ * @return { JSX }
+ */
+
 export default function Performances({ performances }) {
   return (
     <RadarchartWrapper>
@@ -27,7 +33,7 @@ export default function Performances({ performances }) {
           <PolarGrid radialLines={false} strokeWidth={2} />
           <PolarAngleAxis
             dataKey="name"
-            tick={{ fill: "#ffffff", fontSize: "12" }}
+            tick={{ fill: "#ffffff", fontSize: "11" }}
           />
           {/* <PolarRadiusAxis tickCount={6} /> */}
           <Radar dataKey="value" fill={colors.red} fillOpacity={0.7} />

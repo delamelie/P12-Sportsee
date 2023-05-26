@@ -12,6 +12,12 @@ import PropTypes from "prop-types";
 import styled from "styled-components";
 import { colors } from "../utils/variables";
 
+/**
+ * Render daily activities chart
+ * @param { Array } activities
+ * @return { JSX }
+ */
+
 export default function DailyActivities({ activities }) {
   return (
     <BarchartWrapper>
@@ -23,7 +29,7 @@ export default function DailyActivities({ activities }) {
             tickLine={false}
             tickFormatter={formatXAxis}
             tick={{ fill: "#9B9EAC", fontSize: "14" }}
-            // padding={{ left: -35, right: -35 }}
+            padding={{ left: -25, right: -25 }}
           />
 
           <YAxis
@@ -67,13 +73,22 @@ export default function DailyActivities({ activities }) {
   );
 }
 
-///// Set XAxis labels (starting from 1 instead of 0)
+/**
+ * Set XAxis labels (starting from 1 instead of 0)
+ * @param { Number } value
+ * @return { Number }
+ */
 
 function formatXAxis(value) {
   return value + 1;
 }
 
-//// Custom tooltip
+/**
+ * Customise tooltip
+ * @param { Bool } active
+ * @param { Array } payload
+ * @return { JSX }
+ */
 
 function CustomTooltip({ active, payload }) {
   if (active && payload && payload.length) {
@@ -96,10 +111,10 @@ DailyActivities.propTypes = {
   activities: PropTypes.array.isRequired,
 };
 
-CustomTooltip.propTypes = {
-  active: PropTypes.bool.isRequired,
-  payload: PropTypes.array.isRequired,
-};
+// CustomTooltip.propTypes = {
+//   active: PropTypes.bool.isRequired,
+//   payload: PropTypes.array.isRequired,
+// };
 
 const BarchartWrapper = styled.div`
   background-color: ${colors.white};

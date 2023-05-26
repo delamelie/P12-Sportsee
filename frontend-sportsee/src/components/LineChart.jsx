@@ -10,6 +10,12 @@ import PropTypes from "prop-types";
 import styled from "styled-components";
 import { colors } from "../utils/variables";
 
+/**
+ * Render average duration of sessions
+ * @param { Array } averageSessions
+ * @return { JSX }
+ */
+
 export default function AverageSession({ averageSessions }) {
   return (
     <LinechartWrapper>
@@ -64,7 +70,11 @@ export default function AverageSession({ averageSessions }) {
   );
 }
 
-///// Set XAxis labels (displaying week days first letter instead os numbers)
+/**
+ * Set XAxis labels (displaying week days first letter instead of numbers)
+ * @param { Number } value
+ * @return { Number }
+ */
 
 function formatXAxis(value) {
   const days = ["L", "M", "M", "J", "V", "S", "D"];
@@ -74,7 +84,12 @@ function formatXAxis(value) {
   }
 }
 
-//// Custom tooltip
+/**
+ * Customise tooltip
+ * @param { Bool } active
+ * @param { Array } payload
+ * @return { JSX }
+ */
 
 function CustomTooltip({ active, payload }) {
   if (active && payload) {
@@ -87,10 +102,10 @@ AverageSession.propTypes = {
   averageSessions: PropTypes.array.isRequired,
 };
 
-CustomTooltip.propTypes = {
-  active: PropTypes.bool.isRequired,
-  payload: PropTypes.array.isRequired,
-};
+// CustomTooltip.propTypes = {
+//   active: PropTypes.bool.isRequired,
+//   payload: PropTypes.array.isRequired,
+// };
 
 const LinechartWrapper = styled.div`
   width: 30%;
@@ -99,7 +114,7 @@ const LinechartWrapper = styled.div`
 `;
 
 const LinechartTitle = styled.h2`
-  width: 150px;
+  max-width: 140px;
   margin: 20px 0 0 20px;
   font-size: 15px;
   font-weight: 500;

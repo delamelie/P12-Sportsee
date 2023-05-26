@@ -3,13 +3,18 @@ import logo from "../assets/logo.png";
 import styled from "styled-components";
 import { colors } from "../utils/variables";
 
+/**
+ * Render header
+ * @return { JSX }
+ */
+
 export default function Header() {
   return (
     <HeaderWrapper role="navigation" aria-label="Navigation générale">
       <HeaderLogo src={logo} alt="Logo" className="header__logo" />
       <HeaderNav>
         <HeaderNavLinks>
-          <HeaderLink to="home">
+          <HeaderLink to="/">
             <li className="header__navigation__item">Accueil</li>
           </HeaderLink>
 
@@ -45,12 +50,11 @@ const HeaderLogo = styled.img`
 
 const HeaderNav = styled.nav`
   width: 100%;
-  margin: 0 110px;
 `;
 
 const HeaderNavLinks = styled.ul`
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   font-size: 24px;
 `;
 

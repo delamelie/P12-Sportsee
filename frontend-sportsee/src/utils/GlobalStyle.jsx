@@ -20,7 +20,10 @@ export const GlobalStyle = createGlobalStyle`
     }
     
     .container {
+      margin: 0 20px 0 150px;
+      @media (min-width: 1200px) {
       margin: 0 103px 0 220px;
+      }
     }
     
 

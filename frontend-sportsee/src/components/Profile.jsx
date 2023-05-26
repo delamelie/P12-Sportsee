@@ -3,13 +3,17 @@ import PropTypes from "prop-types";
 import styled from "styled-components";
 import { colors } from "../utils/variables";
 
-// const firstName = USER_MAIN_DATA[0].userInfos.firstName;
+/**
+ * Render user's first name
+ * @param { String } firstName
+ * @return { JSX }
+ */
 
-export default function Profile({ name }) {
+export default function Profile({ firstName }) {
   return (
     <ProfileWrapper>
       <ProfileTitle>
-        Bonjour <ProfileName>{name}</ProfileName>
+        Bonjour <ProfileName>{firstName}</ProfileName>
       </ProfileTitle>
       <ProfileCongrats>
         Félicitations ! Vous avez explosé vos objectifs hier 👏

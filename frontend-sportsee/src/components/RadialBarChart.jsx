@@ -8,6 +8,13 @@ import PropTypes from "prop-types";
 import styled from "styled-components";
 import { colors } from "../utils/variables";
 
+/**
+ * Render daily activities chart
+ * @param { Number } scorePercentage
+ * @param { Array } percentageArray
+ * @return { JSX }
+ */
+
 export default function Score({ scorePercentage, percentageArray }) {
   return (
     <RadialbarchartWrapper>
