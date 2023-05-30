@@ -1,7 +1,7 @@
 // import { USER_MAIN_DATA } from "../mocked-data/data";
 import PropTypes from "prop-types";
 import styled from "styled-components";
-import { colors } from "../utils/variables";
+import { colors } from "../style/variables";
 
 /**
  * Render user's first name

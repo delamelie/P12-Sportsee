@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { colors } from "../utils/variables";
+import { colors } from "../style/variables";
 
 export default function Home() {
   return (

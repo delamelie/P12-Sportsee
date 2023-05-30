@@ -8,7 +8,7 @@ import {
 } from "recharts";
 import PropTypes from "prop-types";
 import styled from "styled-components";
-import { colors } from "../utils/variables";
+import { colors } from "../style/variables";
 
 /**
  * Render average duration of sessions
@@ -46,7 +46,7 @@ export default function AverageSession({ averageSessions }) {
             content={<CustomTooltip />}
             cursor={{
               stroke: "#020203",
-              strokeWidth: 70,
+              strokeWidth: 40,
               strokeOpacity: 0.1,
             }}
           />
@@ -78,10 +78,7 @@ export default function AverageSession({ averageSessions }) {
 
 function formatXAxis(value) {
   const days = ["L", "M", "M", "J", "V", "S", "D"];
-
-  if (value >= 1 && value <= 7) {
-    return days[value - 1];
-  }
+  return days[value - 1];
 }
 
 /**
@@ -102,10 +99,10 @@ AverageSession.propTypes = {
   averageSessions: PropTypes.array.isRequired,
 };
 
-// CustomTooltip.propTypes = {
-//   active: PropTypes.bool.isRequired,
-//   payload: PropTypes.array.isRequired,
-// };
+CustomTooltip.propTypes = {
+  active: PropTypes.bool.isRequired,
+  payload: PropTypes.array.isRequired,
+};
 
 const LinechartWrapper = styled.div`
   width: 30%;

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { colors } from "../utils/variables";
+import { colors } from "../style/variables";
 import yogaIcon from "../assets/yoga.png";
 import swimmingIcon from "../assets/swimming.png";
 import cyclingIcon from "../assets/cycling.png";

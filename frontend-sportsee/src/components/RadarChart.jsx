@@ -3,12 +3,11 @@ import {
   RadarChart,
   PolarGrid,
   PolarAngleAxis,
-  PolarRadiusAxis,
   ResponsiveContainer,
 } from "recharts";
 import PropTypes from "prop-types";
 import styled from "styled-components";
-import { colors } from "../utils/variables";
+import { colors } from "../style/variables";
 
 /**
  * Render performances chart
@@ -33,9 +32,10 @@ export default function Performances({ performances }) {
           <PolarGrid radialLines={false} strokeWidth={2} />
           <PolarAngleAxis
             dataKey="name"
+            tickSize={15}
             tick={{ fill: "#ffffff", fontSize: "11" }}
+            dy={4}
           />
-          {/* <PolarRadiusAxis tickCount={6} /> */}
           <Radar dataKey="value" fill={colors.red} fillOpacity={0.7} />
         </RadarChart>
       </ResponsiveContainer>

@@ -255,7 +255,10 @@ const UserDataWrapper = styled.main`
 `;
 
 const UserGraphs = styled.section`
-  width: 70%;
+  width: 90%;
+  @media (min-width: 1300px) {
+    width: 70%;
+  }
 `;
 
 const SmallerGraphs = styled.div`

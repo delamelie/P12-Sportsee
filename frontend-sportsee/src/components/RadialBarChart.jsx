@@ -6,7 +6,7 @@ import {
 } from "recharts";
 import PropTypes from "prop-types";
 import styled from "styled-components";
-import { colors } from "../utils/variables";
+import { colors } from "../style/variables";
 
 /**
  * Render daily activities chart

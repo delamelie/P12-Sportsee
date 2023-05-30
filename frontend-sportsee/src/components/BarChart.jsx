@@ -10,7 +10,7 @@ import {
 } from "recharts";
 import PropTypes from "prop-types";
 import styled from "styled-components";
-import { colors } from "../utils/variables";
+import { colors } from "../style/variables";
 
 /**
  * Render daily activities chart
@@ -47,11 +47,12 @@ export default function DailyActivities({ activities }) {
             align="right"
             iconType="circle"
             iconSize={10}
-            wrapperStyle={{ fontSize: "14px" }}
-            // formatter={renderColorfulLegendText}
-            // formatter={(value, entry, index) => (
-            //   <span className="text-color-class">{value}</span>
-            // )}
+            wrapperStyle={{
+              fontSize: "14px",
+              marginTop: "-30px",
+              marginRight: "20px",
+            }}
+            formatter={(value) => <LegendFormatter>{value}</LegendFormatter>}
           />
           <Bar
             name="Poids (kg)"
@@ -102,19 +103,14 @@ function CustomTooltip({ active, payload }) {
   return null;
 }
 
-// function renderColorfulLegendText(value) {
-//   const { color } = "#74798c";
-//   return <span style={{ color }}>{value}</span>;
-// }
-
 DailyActivities.propTypes = {
   activities: PropTypes.array.isRequired,
 };
 
-// CustomTooltip.propTypes = {
-//   active: PropTypes.bool.isRequired,
-//   payload: PropTypes.array.isRequired,
-// };
+CustomTooltip.propTypes = {
+  active: PropTypes.bool.isRequired,
+  payload: PropTypes.array.isRequired,
+};
 
 const BarchartWrapper = styled.div`
   background-color: ${colors.white};
@@ -132,4 +128,9 @@ const TooltipWrapper = styled.div`
   background-color: #e60000;
   color: ${colors.white};
   font-size: 10px;
+`;
+
+const LegendFormatter = styled.span`
+  color: ${colors.light_grey};
+  margin-bottom: 50px;
 `;
