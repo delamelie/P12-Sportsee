@@ -5,7 +5,7 @@ import { colors } from "../style/variables";
 
 /**
  * Render header
- * @return { JSX }
+ * @returns { JSX }
  */
 
 export default function Header() {
@@ -18,15 +18,15 @@ export default function Header() {
             <li className="header__navigation__item">Accueil</li>
           </HeaderLink>
 
-          <HeaderLink to="profile">
+          <HeaderLink to="#">
             <li className="header__navigation__item">Profil</li>
           </HeaderLink>
 
-          <HeaderLink to="settings">
+          <HeaderLink to="#">
             <li className="header__navigation__item">Réglages</li>
           </HeaderLink>
 
-          <HeaderLink to="community">
+          <HeaderLink to="#">
             <li className="header__navigation__item">Communauté</li>
           </HeaderLink>
         </HeaderNavLinks>

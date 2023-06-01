@@ -12,7 +12,7 @@ import { colors } from "../style/variables";
 /**
  * Render performances chart
  * @param { Array } performances
- * @return { JSX }
+ * @returns { JSX }
  */
 
 export default function Performances({ performances }) {
@@ -32,7 +32,7 @@ export default function Performances({ performances }) {
           <PolarGrid radialLines={false} strokeWidth={2} />
           <PolarAngleAxis
             dataKey="name"
-            tickSize={15}
+            tickSize={10}
             tick={{ fill: "#ffffff", fontSize: "11" }}
             dy={4}
           />

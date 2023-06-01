@@ -6,7 +6,7 @@ import { colors } from "../style/variables";
 /**
  * Render user's first name
  * @param { String } firstName
- * @return { JSX }
+ * @returns { JSX }
  */
 
 export default function Profile({ firstName }) {
@@ -22,12 +22,15 @@ export default function Profile({ firstName }) {
   );
 }
 
-Profile.propTypes = {
-  name: PropTypes.string.isRequired,
-};
+// Profile.propTypes = {
+//   name: PropTypes.string.isRequired,
+// };
 
 const ProfileWrapper = styled.div`
-  margin: 60px 0 90px 0;
+  margin: 60px 0 50px 0;
+  @media (min-width: 1250px) {
+    margin-bottom: 90px;
+  }
 `;
 
 const ProfileTitle = styled.h1`

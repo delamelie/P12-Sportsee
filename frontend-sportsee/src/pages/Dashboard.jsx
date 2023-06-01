@@ -10,10 +10,10 @@ import {
 
 import styled from "styled-components";
 import Profile from "../components/Profile";
-import DailyActivities from "../components/BarChart";
-import AverageSession from "../components/LineChart";
-import Performances from "../components/RadarChart";
-import Score from "../components/RadialBarChart";
+import DailyActivities from "../components/DailyActivities";
+import AverageSession from "../components/AverageSession";
+import Performances from "../components/Performances";
+import Score from "../components/Score";
 import FigureCard from "../components/FigureCard";
 import proteinsIcon from "../assets/protein-icon.png";
 import caloriesIcon from "../assets/calories-icon.png";
@@ -22,6 +22,7 @@ import fatIcon from "../assets/fat-icon.png";
 
 //retrieve user's performances' values to display inside RadarChart component
 const perf = USER_PERFORMANCE[0].data;
+console.log(perf);
 const labels = USER_PERFORMANCE[0].kind;
 
 //create separate array for labels
@@ -52,20 +53,14 @@ labelsArray.forEach((item) => {
 });
 
 //merge data from those 2 arrays
-const labelsObject = labelsArray.reduce((accumulator, item) => {
-  accumulator[item.kind] = item;
-  return accumulator;
-}, {});
-console.log(labelsObject);
-
-let performances = perf.map((item) =>
-  Object.assign(item, labelsObject[item.kind])
-);
+const performances = perf.map((item, index) => {
+  return Object.assign(item, labelsArray[index]);
+});
 console.log(performances);
 
 /**
  * Render user's dashboard
- * @return { JSX }
+ * @returns { JSX }
  */
 
 export default function Dashboard() {
@@ -77,22 +72,12 @@ export default function Dashboard() {
 
   const { userId } = useParams();
 
-  // useEffect(() => {
-  //   const getUserMainData = async () => {
-  //     const userData = await fetchUserMainData(userId);
-  //     setUserData(userData);
-  //   };
-
-  //   getUserMainData();
-  // }, []);
-
   useEffect(() => {
     async function getUserMainData() {
       try {
         const userData = await fetchUserMainData(userId);
         setUserData(userData);
       } catch (error) {
-        console.log(error);
         setError(true);
       }
     }
@@ -105,7 +90,6 @@ export default function Dashboard() {
         const userAverageSessions = await fetchUserAverageSessions(userId);
         setUserAverageSessions(userAverageSessions);
       } catch (error) {
-        console.log(error);
         setError(true);
       }
     }
@@ -118,7 +102,6 @@ export default function Dashboard() {
         const userActivity = await fetchUserActivity(userId);
         setUserActivity(userActivity);
       } catch (error) {
-        console.log(error);
         setError(true);
       }
     }
@@ -131,7 +114,6 @@ export default function Dashboard() {
         const userPerformance = await fetchUserPerformance(userId);
         setUserPerformance(userPerformance);
       } catch (error) {
-        console.log(error);
         setError(true);
       }
     }
@@ -142,19 +124,17 @@ export default function Dashboard() {
     return <span>Oups il y a eu un problème</span>;
   }
 
-  console.log(userPerformance && userPerformance.data.data);
-
-  //retrieve user's score and convert into % to display inside RadialBarChart component
+  //retrieve user's score and convert into % to display inside Score component
   const scorePercentage =
     (userData && userData.data.todayScore * 100) ||
     (userData && userData.data.score * 100);
   const percentageArray = [{ scorePercentage }];
 
-  //retrieve user's performances' values to display inside RadarChart component
-  const perfo = userPerformance && userPerformance.data.data;
-  console.log(perfo);
-  const labelso = userPerformance && userPerformance.data.kind;
-  console.log(labelso);
+  // //retrieve user's performances to display inside Performances component
+  // const perf = userPerformance && userPerformance.data.data;
+  // console.log(perf);
+  // const labels = userPerformance && userPerformance.data.kind;
+  // console.log(labels);
 
   // // create separate array for labels
   // const labelsArray = [];
@@ -165,32 +145,34 @@ export default function Dashboard() {
   //   });
   // });
 
-  // // translate labels into French
   // labelsArray.forEach((item) => {
-  //   if (item.name === "cardio") {
-  //     item.name = "Cardio";
-  //   } else if (item.name === "energy") {
-  //     item.name = "Energie";
-  //   } else if (item.name === "endurance") {
-  //     item.name = "Endurance";
-  //   } else if (item.name === "intensity") {
-  //     item.name = "Intensité";
-  //   } else if (item.name === "strength") {
-  //     item.name = "Force";
-  //   } else if (item.name === "speed") {
-  //     item.name = "Vitesse";
+  //   switch (item.name) {
+  //     case "cardio":
+  //       item.name = "Cardio";
+  //       break;
+  //     case "energy":
+  //       item.name = "Energie";
+  //       break;
+  //     case "endurance":
+  //       item.name = "Endurance";
+  //       break;
+  //     case "intensity":
+  //       item.name = "Intensité";
+  //       break;
+  //     case "speed":
+  //       item.name = "Vitesse";
+  //       break;
+  //     default:
+  //       break;
   //   }
   // });
+  // console.log(labelsArray);
 
   // // merge data from those 2 arrays
-  // const labelsObject = labelsArray.reduce((accumulator, item) => {
-  //   accumulator[item.kind] = item;
-  //   return accumulator;
-  // }, {});
-
-  // let performances = perf.map((item) =>
-  //   Object.assign(item, labelsObject[item.kind])
-  // );
+  // const performances = perf.map((item, index) => {
+  //   return Object.assign(item, labelsArray[index]);
+  // });
+  // console.log(performances);
 
   // retrieve user's personal figures and format them to display inside FigureCard component
   const calories =
@@ -225,7 +207,7 @@ export default function Dashboard() {
           </SmallerGraphs>
         </UserGraphs>
 
-        <section className="figures_overview">
+        <FiguresOverview>
           <FigureCard
             title={"Calories"}
             figure={`${calories}kCal`}
@@ -242,7 +224,7 @@ export default function Dashboard() {
             icon={carbsIcon}
           />
           <FigureCard title={"Lipides"} figure={`${lipids}g`} icon={fatIcon} />
-        </section>
+        </FiguresOverview>
       </UserDataWrapper>
     </div>
   );
@@ -250,13 +232,15 @@ export default function Dashboard() {
 
 const UserDataWrapper = styled.main`
   display: flex;
-  justify-content: space-around;
-  align-items: center;
+  flex-direction: column-reverse;
+  @media (min-width: 1250px) {
+    flex-direction: row;
+    justify-content: space-between;
+  }
 `;
 
 const UserGraphs = styled.section`
-  width: 90%;
-  @media (min-width: 1300px) {
+  @media (min-width: 1250px) {
     width: 70%;
   }
 `;
@@ -265,4 +249,14 @@ const SmallerGraphs = styled.div`
   display: flex;
   justify-content: space-between;
   margin-top: 50px;
+`;
+
+const FiguresOverview = styled.section`
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 40px;
+  @media (min-width: 1250px) {
+    flex-direction: column;
+    margin-bottom: 0;
+  }
 `;

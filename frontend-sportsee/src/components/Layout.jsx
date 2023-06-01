@@ -4,7 +4,7 @@ import Sidebar from "./Sidebar";
 
 /**
  * Render layout to wrap page content
- * @return { JSX }
+ * @returns { JSX }
  */
 
 export default function Layout() {

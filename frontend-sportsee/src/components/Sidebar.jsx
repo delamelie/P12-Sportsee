@@ -7,7 +7,7 @@ import fitnessIcon from "../assets/fitness.png";
 
 /**
  * Render sidebar
- * @return { JSX }
+ * @returns { JSX }
  */
 
 export default function Sidebar() {
@@ -40,30 +40,28 @@ export default function Sidebar() {
 }
 
 const SidebarWrapper = styled.div`
+  width: 120px;
+  height: 100%;
   position: absolute;
   left: 0;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  width: 117px;
-  height: 110vh;
   background-color: ${colors.black};
 `;
 
 const SidebarActivities = styled.ul`
-border: 1px solid blue;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  /* margin-top: 60px;
-  /*height: 55%;
+  height: 40%;
+  margin-top: 60px;
 `;
 
 const SidebarCopyright = styled.span`
-  border: 1px solid green;
   width: 120%;
   transform: rotate(-90deg);
-  color: ${colors.white};
   font-size: 12px;
+  color: ${colors.white};
 `;

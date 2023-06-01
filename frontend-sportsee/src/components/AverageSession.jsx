@@ -13,7 +13,7 @@ import { colors } from "../style/variables";
 /**
  * Render average duration of sessions
  * @param { Array } averageSessions
- * @return { JSX }
+ * @returns { JSX }
  */
 
 export default function AverageSession({ averageSessions }) {
@@ -73,7 +73,7 @@ export default function AverageSession({ averageSessions }) {
 /**
  * Set XAxis labels (displaying week days first letter instead of numbers)
  * @param { Number } value
- * @return { Number }
+ * @returns { Number }
  */
 
 function formatXAxis(value) {
@@ -84,8 +84,8 @@ function formatXAxis(value) {
 /**
  * Customise tooltip
  * @param { Bool } active
- * @param { Array } payload
- * @return { JSX }
+ * @param { Array } payload - Source data of the content to be displayed in the tooltip
+ * @returns { JSX }
  */
 
 function CustomTooltip({ active, payload }) {
@@ -97,6 +97,10 @@ function CustomTooltip({ active, payload }) {
 
 AverageSession.propTypes = {
   averageSessions: PropTypes.array.isRequired,
+};
+
+formatXAxis.propTypes = {
+  value: PropTypes.number.isRequired,
 };
 
 CustomTooltip.propTypes = {

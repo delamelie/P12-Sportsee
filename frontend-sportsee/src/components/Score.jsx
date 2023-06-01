@@ -10,9 +10,9 @@ import { colors } from "../style/variables";
 
 /**
  * Render daily activities chart
- * @param { Number } scorePercentage
- * @param { Array } percentageArray
- * @return { JSX }
+ * @param { Number } scorePercentage - Result of todayScore || score * 100
+ * @param { Array } percentageArray - Above result placed in an array so that data can be used in Recharts
+ * @returns { JSX }
  */
 
 export default function Score({ scorePercentage, percentageArray }) {

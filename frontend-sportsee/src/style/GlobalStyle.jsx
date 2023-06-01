@@ -6,6 +6,7 @@ export const GlobalStyle = createGlobalStyle`
     }
 
     body {
+      position: relative;
       margin: auto;
       box-sizing: border-box;
       font-family: "Roboto", sans-serif;
@@ -20,10 +21,19 @@ export const GlobalStyle = createGlobalStyle`
     }
     
     .container {
-      margin: 0 20px 0 150px;
+      margin: 0 30px 0 150px;
       @media (min-width: 1200px) {
-      margin: 0 103px 0 220px;
+      margin: 0 100px 0 220px;
       }
+      @media (min-width: 1250px) {
+        margin: 0 60px 0 180px;
+        }
+        @media (min-width: 1400px) {
+          margin: 0 100px 0 220px;
+          }
+          @media (min-width: 1500px) {
+            margin: 0 200px 0 220px;
+            }
     }
     
 

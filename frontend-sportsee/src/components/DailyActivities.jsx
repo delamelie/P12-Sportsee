@@ -15,7 +15,7 @@ import { colors } from "../style/variables";
 /**
  * Render daily activities chart
  * @param { Array } activities
- * @return { JSX }
+ * @returns { JSX }
  */
 
 export default function DailyActivities({ activities }) {
@@ -87,12 +87,12 @@ function formatXAxis(value) {
 /**
  * Customise tooltip
  * @param { Bool } active
- * @param { Array } payload
- * @return { JSX }
+ * @param { Array } payload - Source data of the content to be displayed in tooltip
+ * @returns { JSX }
  */
 
 function CustomTooltip({ active, payload }) {
-  if (active && payload && payload.length) {
+  if (active && payload) {
     return (
       <TooltipWrapper>
         <p>{`${payload[0].value}kg`}</p>
@@ -105,6 +105,10 @@ function CustomTooltip({ active, payload }) {
 
 DailyActivities.propTypes = {
   activities: PropTypes.array.isRequired,
+};
+
+formatXAxis.propTypes = {
+  value: PropTypes.number.isRequired,
 };
 
 CustomTooltip.propTypes = {
@@ -125,12 +129,12 @@ const TooltipWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   padding: 0 10px;
-  background-color: #e60000;
   color: ${colors.white};
   font-size: 10px;
+  background-color: #e60000;
 `;
 
 const LegendFormatter = styled.span`
-  color: ${colors.light_grey};
   margin-bottom: 50px;
+  color: ${colors.light_grey};
 `;

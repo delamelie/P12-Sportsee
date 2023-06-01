@@ -2,6 +2,12 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { colors } from "../style/variables";
 
+/**
+ * Render homepage for demo purposes only (2 different users can be selected)
+ * @param { Array } activities
+ * @returns { JSX }
+ */
+
 export default function Home() {
   return (
     <div className="container">
