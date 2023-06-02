@@ -1,6 +1,5 @@
-import { USER_PERFORMANCE } from "../mocked-data/data";
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Navigate } from "react-router-dom";
 import {
   fetchUserMainData,
   fetchUserAverageSessions,
@@ -20,44 +19,6 @@ import caloriesIcon from "../assets/calories-icon.png";
 import carbsIcon from "../assets/carbs-icon.png";
 import fatIcon from "../assets/fat-icon.png";
 
-//retrieve user's performances' values to display inside RadarChart component
-const perf = USER_PERFORMANCE[0].data;
-console.log(perf);
-const labels = USER_PERFORMANCE[0].kind;
-
-//create separate array for labels
-const labelsArray = [];
-Object.keys(labels).forEach((key) => {
-  labelsArray.push({
-    kind: key,
-    name: labels[key],
-  });
-});
-console.log(labelsArray);
-
-//translate labels into French
-labelsArray.forEach((item) => {
-  if (item.name === "cardio") {
-    item.name = "Cardio";
-  } else if (item.name === "energy") {
-    item.name = "Energie";
-  } else if (item.name === "endurance") {
-    item.name = "Endurance";
-  } else if (item.name === "intensity") {
-    item.name = "Intensité";
-  } else if (item.name === "strength") {
-    item.name = "Force";
-  } else if (item.name === "speed") {
-    item.name = "Vitesse";
-  }
-});
-
-//merge data from those 2 arrays
-const performances = perf.map((item, index) => {
-  return Object.assign(item, labelsArray[index]);
-});
-console.log(performances);
-
 /**
  * Render user's dashboard
  * @returns { JSX }
@@ -68,7 +29,10 @@ export default function Dashboard() {
   const [userAverageSessions, setUserAverageSessions] = useState(null);
   const [userActivity, setUserActivity] = useState(null);
   const [userPerformance, setUserPerformance] = useState(null);
-  const [error, setError] = useState(false);
+  const [mainDataError, setMainDataError] = useState(false);
+  const [averageSessionsError, setAverageSessionsError] = useState(false);
+  const [activityError, setActivityError] = useState(false);
+  const [performanceError, setPerformanceError] = useState(false);
 
   const { userId } = useParams();
 
@@ -78,7 +42,7 @@ export default function Dashboard() {
         const userData = await fetchUserMainData(userId);
         setUserData(userData);
       } catch (error) {
-        setError(true);
+        setMainDataError(true);
       }
     }
     getUserMainData();
@@ -90,7 +54,7 @@ export default function Dashboard() {
         const userAverageSessions = await fetchUserAverageSessions(userId);
         setUserAverageSessions(userAverageSessions);
       } catch (error) {
-        setError(true);
+        setAverageSessionsError(true);
       }
     }
     getUserAverageSessions();
@@ -102,7 +66,7 @@ export default function Dashboard() {
         const userActivity = await fetchUserActivity(userId);
         setUserActivity(userActivity);
       } catch (error) {
-        setError(true);
+        setActivityError(true);
       }
     }
     getUserActivity();
@@ -112,16 +76,65 @@ export default function Dashboard() {
     async function getUserPerformance() {
       try {
         const userPerformance = await fetchUserPerformance(userId);
-        setUserPerformance(userPerformance);
+
+        //retrieve user's performances to display inside Performances component : create separate array for labels and translate names into French
+        const perf = userPerformance && userPerformance.data.data;
+        const labels = userPerformance && userPerformance.data.kind;
+
+        const labelsArray = [];
+        Object.keys(labels).forEach((key) => {
+          labelsArray.push({
+            kind: key,
+            name: labels[key],
+          });
+        });
+
+        labelsArray.forEach((item) => {
+          switch (item.name) {
+            case "cardio":
+              item.name = "Cardio";
+              break;
+            case "energy":
+              item.name = "Energie";
+              break;
+            case "endurance":
+              item.name = "Endurance";
+              break;
+            case "intensity":
+              item.name = "Intensité";
+              break;
+            case "speed":
+              item.name = "Vitesse";
+              break;
+            default:
+              break;
+          }
+        });
+
+        // merge data from labelsArray and perf array
+        const performances = perf.map((item, index) => {
+          return Object.assign(item, labelsArray[index]);
+        });
+
+        setUserPerformance(performances);
       } catch (error) {
-        setError(true);
+        setPerformanceError(true);
       }
     }
     getUserPerformance();
   }, []);
 
-  if (error) {
-    return <span>Oups il y a eu un problème</span>;
+  if (
+    mainDataError ||
+    averageSessionsError ||
+    activityError ||
+    performanceError
+  ) {
+    return (
+      <div>
+        <Navigate to="/404" replace={true} />
+      </div>
+    );
   }
 
   //retrieve user's score and convert into % to display inside Score component
@@ -129,50 +142,6 @@ export default function Dashboard() {
     (userData && userData.data.todayScore * 100) ||
     (userData && userData.data.score * 100);
   const percentageArray = [{ scorePercentage }];
-
-  // //retrieve user's performances to display inside Performances component
-  // const perf = userPerformance && userPerformance.data.data;
-  // console.log(perf);
-  // const labels = userPerformance && userPerformance.data.kind;
-  // console.log(labels);
-
-  // // create separate array for labels
-  // const labelsArray = [];
-  // Object.keys(labels).forEach((key) => {
-  //   labelsArray.push({
-  //     kind: key,
-  //     name: labels[key],
-  //   });
-  // });
-
-  // labelsArray.forEach((item) => {
-  //   switch (item.name) {
-  //     case "cardio":
-  //       item.name = "Cardio";
-  //       break;
-  //     case "energy":
-  //       item.name = "Energie";
-  //       break;
-  //     case "endurance":
-  //       item.name = "Endurance";
-  //       break;
-  //     case "intensity":
-  //       item.name = "Intensité";
-  //       break;
-  //     case "speed":
-  //       item.name = "Vitesse";
-  //       break;
-  //     default:
-  //       break;
-  //   }
-  // });
-  // console.log(labelsArray);
-
-  // // merge data from those 2 arrays
-  // const performances = perf.map((item, index) => {
-  //   return Object.assign(item, labelsArray[index]);
-  // });
-  // console.log(performances);
 
   // retrieve user's personal figures and format them to display inside FigureCard component
   const calories =
@@ -199,7 +168,7 @@ export default function Dashboard() {
                 userAverageSessions && userAverageSessions.data.sessions
               }
             />
-            <Performances performances={performances} />
+            <Performances performances={userPerformance && userPerformance} />
             <Score
               scorePercentage={scorePercentage}
               percentageArray={percentageArray}
@@ -241,7 +210,7 @@ const UserDataWrapper = styled.main`
 
 const UserGraphs = styled.section`
   @media (min-width: 1250px) {
-    width: 70%;
+    width: 75%;
   }
 `;
 

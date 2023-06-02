@@ -22,9 +22,9 @@ export default function Profile({ firstName }) {
   );
 }
 
-// Profile.propTypes = {
-//   name: PropTypes.string.isRequired,
-// };
+Profile.propTypes = {
+  name: PropTypes.string,
+};
 
 const ProfileWrapper = styled.div`
   margin: 60px 0 50px 0;

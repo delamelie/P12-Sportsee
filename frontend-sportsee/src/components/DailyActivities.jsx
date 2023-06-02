@@ -104,7 +104,7 @@ function CustomTooltip({ active, payload }) {
 }
 
 DailyActivities.propTypes = {
-  activities: PropTypes.array.isRequired,
+  activities: PropTypes.array,
 };
 
 formatXAxis.propTypes = {
@@ -112,8 +112,8 @@ formatXAxis.propTypes = {
 };
 
 CustomTooltip.propTypes = {
-  active: PropTypes.bool.isRequired,
-  payload: PropTypes.array.isRequired,
+  active: PropTypes.bool,
+  payload: PropTypes.array,
 };
 
 const BarchartWrapper = styled.div`

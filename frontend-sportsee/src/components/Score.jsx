@@ -44,7 +44,7 @@ export default function Score({ scorePercentage, percentageArray }) {
 }
 
 Score.propTypes = {
-  scorePercentage: PropTypes.number.isRequired,
+  scorePercentage: PropTypes.number,
   percentageArray: PropTypes.array.isRequired,
 };
 

@@ -23,7 +23,7 @@ export default function FigureCard({ icon, figure, title }) {
 }
 
 FigureCard.propTypes = {
-  icon: PropTypes.element,
+  icon: PropTypes.string.isRequired,
   figure: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
 };

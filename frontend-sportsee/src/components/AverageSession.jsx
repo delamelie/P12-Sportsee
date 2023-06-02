@@ -43,13 +43,14 @@ export default function AverageSession({ averageSessions }) {
           <YAxis axisLine={false} hide={true} />
 
           <Tooltip
-            content={<CustomTooltip />}
+            content={CustomTooltip}
             cursor={{
               stroke: "#020203",
-              strokeWidth: 40,
+              strokeWidth: 50,
               strokeOpacity: 0.1,
             }}
           />
+
           <Line
             type="monotone"
             //type="basis"
@@ -96,7 +97,7 @@ function CustomTooltip({ active, payload }) {
 }
 
 AverageSession.propTypes = {
-  averageSessions: PropTypes.array.isRequired,
+  averageSessions: PropTypes.array,
 };
 
 formatXAxis.propTypes = {

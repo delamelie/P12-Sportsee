@@ -44,7 +44,7 @@ export default function Performances({ performances }) {
 }
 
 Performances.propTypes = {
-  performances: PropTypes.array.isRequired,
+  performances: PropTypes.array,
 };
 
 const RadarchartWrapper = styled.div`

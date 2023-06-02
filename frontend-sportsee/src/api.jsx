@@ -5,7 +5,7 @@ import {
   USER_AVERAGE_SESSIONS,
 } from "./mocked-data/data";
 
-let callApi = true;
+let callApi = false;
 
 /**
  * Call API to retrieve user main data, activities, performances and average sessions
