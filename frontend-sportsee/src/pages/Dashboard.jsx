@@ -29,20 +29,17 @@ export default function Dashboard() {
   const [userAverageSessions, setUserAverageSessions] = useState(null);
   const [userActivity, setUserActivity] = useState(null);
   const [userPerformance, setUserPerformance] = useState(null);
-  const [mainDataError, setMainDataError] = useState(false);
-  const [averageSessionsError, setAverageSessionsError] = useState(false);
-  const [activityError, setActivityError] = useState(false);
-  const [performanceError, setPerformanceError] = useState(false);
+  const [error, setError] = useState(false);
 
   const { userId } = useParams();
 
   useEffect(() => {
     async function getUserMainData() {
       try {
-        const userData = await fetchUserMainData(userId);
-        setUserData(userData);
+        const data = await fetchUserMainData(userId);
+        setUserData(data);
       } catch (error) {
-        setMainDataError(true);
+        setError(true);
       }
     }
     getUserMainData();
@@ -51,10 +48,10 @@ export default function Dashboard() {
   useEffect(() => {
     async function getUserAverageSessions() {
       try {
-        const userAverageSessions = await fetchUserAverageSessions(userId);
-        setUserAverageSessions(userAverageSessions);
+        const data = await fetchUserAverageSessions(userId);
+        setUserAverageSessions(data);
       } catch (error) {
-        setAverageSessionsError(true);
+        setError(true);
       }
     }
     getUserAverageSessions();
@@ -63,10 +60,10 @@ export default function Dashboard() {
   useEffect(() => {
     async function getUserActivity() {
       try {
-        const userActivity = await fetchUserActivity(userId);
-        setUserActivity(userActivity);
+        const data = await fetchUserActivity(userId);
+        setUserActivity(data);
       } catch (error) {
-        setActivityError(true);
+        setError(true);
       }
     }
     getUserActivity();
@@ -118,18 +115,13 @@ export default function Dashboard() {
 
         setUserPerformance(performances);
       } catch (error) {
-        setPerformanceError(true);
+        setError(true);
       }
     }
     getUserPerformance();
   }, []);
 
-  if (
-    mainDataError ||
-    averageSessionsError ||
-    activityError ||
-    performanceError
-  ) {
+  if (error) {
     return (
       <div>
         <Navigate to="/404" replace={true} />
