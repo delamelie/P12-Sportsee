@@ -9,56 +9,83 @@ let callApi = false;
 
 /**
  * Call API to retrieve user main data, activities, performances and average sessions
- * @param { String } userId
+ * @param { String } id
  * @return { Object }
  */
 
-export async function fetchUserMainData(userId) {
+export async function fetchUserMainData(id) {
+  console.log(id);
   if (callApi) {
-    const response = await fetch(`http://localhost:3000/user/${userId}`);
-    let data = await response.json();
-    return data;
+    try {
+      const response = await fetch(`http://localhost:3000/user/${id}`);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      let data = await response.json();
+      return data;
+    } catch (error) {
+      console.log("error", error);
+    }
   } else {
-    return { data: USER_MAIN_DATA.find((element) => element.id == userId) };
+    return { data: USER_MAIN_DATA.find((element) => element.id == id) };
   }
 }
 
-export async function fetchUserActivity(userId) {
+export async function fetchUserActivity(id) {
   if (callApi) {
-    const response = await fetch(
-      `http://localhost:3000/user/${userId}/activity`
-    );
-    let data = await response.json();
-    return data;
+    try {
+      const response = await fetch(`http://localhost:3000/user/${id}/activity`);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      let data = await response.json();
+      return data;
+    } catch (error) {
+      console.log("error", error);
+    }
   } else {
-    return { data: USER_ACTIVITY.find((element) => element.userId == userId) };
+    return { data: USER_ACTIVITY.find((element) => element.userId == id) };
   }
 }
 
-export async function fetchUserAverageSessions(userId) {
+export async function fetchUserAverageSessions(id) {
   if (callApi) {
-    const response = await fetch(
-      `http://localhost:3000/user/${userId}/average-sessions`
-    );
-    let data = await response.json();
-    return data;
+    try {
+      const response = await fetch(
+        `http://localhost:3000/user/${id}/average-sessions`
+      );
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      let data = await response.json();
+      return data;
+    } catch (error) {
+      console.log("error", error);
+    }
   } else {
     return {
-      data: USER_AVERAGE_SESSIONS.find((element) => element.userId == userId),
+      data: USER_AVERAGE_SESSIONS.find((element) => element.userId == id),
     };
   }
 }
 
-export async function fetchUserPerformance(userId) {
+export async function fetchUserPerformance(id) {
   if (callApi) {
-    const response = await fetch(
-      `http://localhost:3000/user/${userId}/performance`
-    );
-    let data = await response.json();
-    return data;
+    try {
+      const response = await fetch(
+        `http://localhost:3000/user/${id}/performance`
+      );
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      let data = await response.json();
+      return data;
+    } catch (error) {
+      console.log("error", error);
+    }
   } else {
     return {
-      data: USER_PERFORMANCE.find((element) => element.userId == userId),
+      data: USER_PERFORMANCE.find((element) => element.userId == id),
     };
   }
 }

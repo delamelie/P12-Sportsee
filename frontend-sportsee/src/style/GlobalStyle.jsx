@@ -25,16 +25,8 @@ export const GlobalStyle = createGlobalStyle`
       @media (min-width: 1200px) {
       margin: 0 100px 0 220px;
       }
-      @media (min-width: 1250px) {
-        margin: 0 60px 0 180px;
-        }
-        @media (min-width: 1400px) {
-          margin: 0 100px 0 220px;
-          }
-          @media (min-width: 1500px) {
-            margin: 0 200px 0 220px;
+          @media (min-width: 1400px) {
+            margin-right: 200px;
             }
     }
-    
-
 `;

@@ -7,6 +7,11 @@ import {
   fetchUserPerformance,
 } from "../api.jsx";
 
+import User from "../models/User.js";
+import Activity from "../models/Activity.js";
+import AverageSessions from "../models/AverageSessions.js";
+import Performance from "../models/Performance.js";
+
 import styled from "styled-components";
 import Profile from "../components/Profile";
 import DailyActivities from "../components/DailyActivities";
@@ -31,13 +36,14 @@ export default function Dashboard() {
   const [userPerformance, setUserPerformance] = useState(null);
   const [error, setError] = useState(false);
 
-  const { userId } = useParams();
+  const { id } = useParams();
 
   useEffect(() => {
     async function getUserMainData() {
       try {
-        const data = await fetchUserMainData(userId);
-        setUserData(data);
+        const { data } = await fetchUserMainData(id);
+        const userModel = new User(data);
+        setUserData(userModel);
       } catch (error) {
         setError(true);
       }
@@ -46,22 +52,11 @@ export default function Dashboard() {
   }, []);
 
   useEffect(() => {
-    async function getUserAverageSessions() {
-      try {
-        const data = await fetchUserAverageSessions(userId);
-        setUserAverageSessions(data);
-      } catch (error) {
-        setError(true);
-      }
-    }
-    getUserAverageSessions();
-  }, []);
-
-  useEffect(() => {
     async function getUserActivity() {
       try {
-        const data = await fetchUserActivity(userId);
-        setUserActivity(data);
+        const { data } = await fetchUserActivity(id);
+        const activityModel = new Activity(data);
+        setUserActivity(activityModel);
       } catch (error) {
         setError(true);
       }
@@ -70,50 +65,24 @@ export default function Dashboard() {
   }, []);
 
   useEffect(() => {
+    async function getUserAverageSessions() {
+      try {
+        const { data } = await fetchUserAverageSessions(id);
+        const averageSessionsModel = new AverageSessions(data);
+        setUserAverageSessions(averageSessionsModel);
+      } catch (error) {
+        setError(true);
+      }
+    }
+    getUserAverageSessions();
+  }, []);
+
+  useEffect(() => {
     async function getUserPerformance() {
       try {
-        const userPerformance = await fetchUserPerformance(userId);
-
-        //retrieve user's performances to display inside Performances component : create separate array for labels and translate names into French
-        const perf = userPerformance && userPerformance.data.data;
-        const labels = userPerformance && userPerformance.data.kind;
-
-        const labelsArray = [];
-        Object.keys(labels).forEach((key) => {
-          labelsArray.push({
-            kind: key,
-            name: labels[key],
-          });
-        });
-
-        labelsArray.forEach((item) => {
-          switch (item.name) {
-            case "cardio":
-              item.name = "Cardio";
-              break;
-            case "energy":
-              item.name = "Energie";
-              break;
-            case "endurance":
-              item.name = "Endurance";
-              break;
-            case "intensity":
-              item.name = "Intensité";
-              break;
-            case "speed":
-              item.name = "Vitesse";
-              break;
-            default:
-              break;
-          }
-        });
-
-        // merge data from labelsArray and perf array
-        const performances = perf.map((item, index) => {
-          return Object.assign(item, labelsArray[index]);
-        });
-
-        setUserPerformance(performances);
+        const { data } = await fetchUserPerformance(id);
+        const userPerformanceModel = new Performance(data);
+        setUserPerformance(userPerformanceModel);
       } catch (error) {
         setError(true);
       }
@@ -129,41 +98,25 @@ export default function Dashboard() {
     );
   }
 
-  //retrieve user's score and convert into % to display inside Score component
-  const scorePercentage =
-    (userData && userData.data.todayScore * 100) ||
-    (userData && userData.data.score * 100);
-  const percentageArray = [{ scorePercentage }];
-
-  // retrieve user's personal figures and format them to display inside FigureCard component
-  const calories =
-    userData && userData.data.keyData.calorieCount.toLocaleString("en-US");
-  const proteins =
-    userData && userData.data.keyData.proteinCount.toLocaleString("en-US");
-  const carbohydrates =
-    userData && userData.data.keyData.carbohydrateCount.toLocaleString("en-US");
-  const lipids =
-    userData && userData.data.keyData.lipidCount.toLocaleString("en-US");
-
   return (
     <div className="container">
-      <Profile firstName={userData && userData.data.userInfos.firstName} />
+      <Profile firstName={userData && userData.firstName} />
 
       <UserDataWrapper>
         <UserGraphs>
-          <DailyActivities
-            activities={userActivity && userActivity.data.sessions}
-          />
+          <DailyActivities activities={userActivity && userActivity.sessions} />
           <SmallerGraphs>
             <AverageSession
               averageSessions={
-                userAverageSessions && userAverageSessions.data.sessions
+                userAverageSessions && userAverageSessions.sessions
               }
             />
-            <Performances performances={userPerformance && userPerformance} />
+            <Performances
+              performances={userPerformance && userPerformance.getDataLabel()}
+            />
             <Score
-              scorePercentage={scorePercentage}
-              percentageArray={percentageArray}
+              scorePercentage={userData && userData.getScore()}
+              percentageArray={userData && userData.getScoreArray()}
             />
           </SmallerGraphs>
         </UserGraphs>
@@ -171,20 +124,24 @@ export default function Dashboard() {
         <FiguresOverview>
           <FigureCard
             title={"Calories"}
-            figure={`${calories}kCal`}
+            figure={`${userData && userData.getCalories()}kCal`}
             icon={caloriesIcon}
           />
           <FigureCard
             title={"Protéines"}
-            figure={`${proteins}g`}
+            figure={`${userData && userData.getProteins()}g`}
             icon={proteinsIcon}
           />
           <FigureCard
             title={"Glucides"}
-            figure={`${carbohydrates}g`}
+            figure={`${userData && userData.getCarbohydrates()}g`}
             icon={carbsIcon}
           />
-          <FigureCard title={"Lipides"} figure={`${lipids}g`} icon={fatIcon} />
+          <FigureCard
+            title={"Lipides"}
+            figure={`${userData && userData.getLipids()}g`}
+            icon={fatIcon}
+          />
         </FiguresOverview>
       </UserDataWrapper>
     </div>
@@ -193,16 +150,13 @@ export default function Dashboard() {
 
 const UserDataWrapper = styled.main`
   display: flex;
-  flex-direction: column-reverse;
-  @media (min-width: 1250px) {
-    flex-direction: row;
-    justify-content: space-between;
-  }
+  justify-content: space-between;
 `;
 
 const UserGraphs = styled.section`
-  @media (min-width: 1250px) {
-    width: 75%;
+  width: 75%;
+  @media (min-width: 1300px) {
+    width: 70%;
   }
 `;
 
@@ -214,10 +168,61 @@ const SmallerGraphs = styled.div`
 
 const FiguresOverview = styled.section`
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
-  margin-bottom: 40px;
-  @media (min-width: 1250px) {
-    flex-direction: column;
-    margin-bottom: 0;
-  }
 `;
+
+// ///Test
+// import { Component } from "react";
+// import { fetchUserMainData } from "../api";
+
+// export default class Dashboard extends Component {
+//   constructor(props) {
+//     super(props);
+//     this.state = {
+//       userData: {},
+//     };
+//   }
+
+//   componentDidMount() {
+//     const { id } = this.props;
+
+//     fetchUserMainData(id)
+//       .then((response) => {
+//         const responseData = response.data;
+//         console.log("responseData");
+//         this.setState({ responseData });
+//         console.log(this.userData);
+//       })
+//       .catch((error) => {
+//         console.log("Error fetching user data:", error);
+//       });
+
+//     fetch(`http://localhost:3000/user/${id}`)
+//       .then((response) => response.json())
+//       .then((jsonResponse) => {
+//         //Formatage
+
+//         this.setState({ userData: jsonResponse?.data });
+//         console.log(jsonResponse);
+//       });
+//   }
+
+//   render() {
+//     const { userData } = this.state;
+//     console.log(this);
+//     console.log(this.state);
+
+//     const { userInfos, todayScore, keyData, id } = userData;
+
+//     return (
+//       <div>
+//         <p>
+//           Today's Score: ttttttttttttttttttttttttttttttttttt
+//           {userInfos?.firstName}
+//         </p>
+//         <p>Calorie Count:eeeeeeeeeeeeeeeeeeeeeeeeeee {keyData?.calorieCount}</p>
+//       </div>
+//     );
+//   }
+// }

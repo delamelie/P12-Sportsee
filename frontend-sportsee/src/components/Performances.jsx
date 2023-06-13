@@ -32,8 +32,8 @@ export default function Performances({ performances }) {
           <PolarGrid radialLines={false} strokeWidth={2} />
           <PolarAngleAxis
             dataKey="name"
-            tickSize={10}
-            tick={{ fill: "#ffffff", fontSize: "11" }}
+            tickSize={6}
+            tick={{ fill: "#ffffff", fontSize: "10" }}
             dy={4}
           />
           <Radar dataKey="value" fill={colors.red} fillOpacity={0.7} />

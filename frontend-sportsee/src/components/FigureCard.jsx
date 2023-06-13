@@ -38,19 +38,13 @@ const CardWrapper = styled.div`
 const CardDescription = styled.div`
   display: flex;
   flex-direction: column;
-  margin-left: 20px;
-  @media (min-width: 1250px) {
-    margin-left: 30px;
-  }
+  margin-left: 30px;
 `;
 
 const CardFigure = styled.span`
-  font-size: 14px;
+  font-size: 20px;
   font-weight: 700;
   color: ${colors.dark_grey};
-  @media (min-width: 1250px) {
-    font-size: 20px;
-  }
 `;
 
 const CardTitle = styled.span`
@@ -59,12 +53,7 @@ const CardTitle = styled.span`
 `;
 
 const Icon = styled.img`
-  width: 50px;
-  height: 50px;
+  width: 60px;
+  height: 60px;
   border-radius: 6px;
-  @media (min-width: 1250px) {
-    width: 60px;
-    height: 60px;
-    margin-left: 40px;
-  }
 `;

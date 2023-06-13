@@ -27,10 +27,7 @@ Profile.propTypes = {
 };
 
 const ProfileWrapper = styled.div`
-  margin: 60px 0 50px 0;
-  @media (min-width: 1250px) {
-    margin-bottom: 90px;
-  }
+  margin: 60px 0 90px 0;
 `;
 
 const ProfileTitle = styled.h1`
