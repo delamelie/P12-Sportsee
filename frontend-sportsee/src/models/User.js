@@ -31,7 +31,7 @@ export default class User {
     return percentageArray;
   }
 
-  //format number to get thousands separator
+  //format numbers to get thousands separator
   getCalories() {
     const caloriesFigure = this.calories.toLocaleString("en-US");
     return caloriesFigure;

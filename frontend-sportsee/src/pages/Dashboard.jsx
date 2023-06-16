@@ -99,52 +99,63 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="container">
-      <Profile firstName={userData && userData.firstName} />
+    userData &&
+    userActivity &&
+    userAverageSessions &&
+    userPerformance && (
+      <div className="container">
+        <div>
+          <Profile firstName={userData && userData.firstName} />
 
-      <UserDataWrapper>
-        <UserGraphs>
-          <DailyActivities activities={userActivity && userActivity.sessions} />
-          <SmallerGraphs>
-            <AverageSession
-              averageSessions={
-                userAverageSessions && userAverageSessions.sessions
-              }
-            />
-            <Performances
-              performances={userPerformance && userPerformance.getDataLabel()}
-            />
-            <Score
-              scorePercentage={userData && userData.getScore()}
-              percentageArray={userData && userData.getScoreArray()}
-            />
-          </SmallerGraphs>
-        </UserGraphs>
+          <UserDataWrapper>
+            <UserGraphs>
+              <DailyActivities
+                activities={userActivity && userActivity.sessions}
+              />
+              <SmallerGraphs>
+                <AverageSession
+                  averageSessions={
+                    userAverageSessions && userAverageSessions.sessions
+                  }
+                />
+                <Performances
+                  performances={
+                    userPerformance && userPerformance.getDataLabel()
+                  }
+                />
+                <Score
+                  scorePercentage={userData && userData.getScore()}
+                  percentageArray={userData && userData.getScoreArray()}
+                />
+              </SmallerGraphs>
+            </UserGraphs>
 
-        <FiguresOverview>
-          <FigureCard
-            title={"Calories"}
-            figure={`${userData && userData.getCalories()}kCal`}
-            icon={caloriesIcon}
-          />
-          <FigureCard
-            title={"Protéines"}
-            figure={`${userData && userData.getProteins()}g`}
-            icon={proteinsIcon}
-          />
-          <FigureCard
-            title={"Glucides"}
-            figure={`${userData && userData.getCarbohydrates()}g`}
-            icon={carbsIcon}
-          />
-          <FigureCard
-            title={"Lipides"}
-            figure={`${userData && userData.getLipids()}g`}
-            icon={fatIcon}
-          />
-        </FiguresOverview>
-      </UserDataWrapper>
-    </div>
+            <FiguresOverview>
+              <FigureCard
+                title={"Calories"}
+                figure={`${userData && userData.getCalories()}kCal`}
+                icon={caloriesIcon}
+              />
+              <FigureCard
+                title={"Protéines"}
+                figure={`${userData && userData.getProteins()}g`}
+                icon={proteinsIcon}
+              />
+              <FigureCard
+                title={"Glucides"}
+                figure={`${userData && userData.getCarbohydrates()}g`}
+                icon={carbsIcon}
+              />
+              <FigureCard
+                title={"Lipides"}
+                figure={`${userData && userData.getLipids()}g`}
+                icon={fatIcon}
+              />
+            </FiguresOverview>
+          </UserDataWrapper>
+        </div>
+      </div>
+    )
   );
 }
 
@@ -218,10 +229,10 @@ const FiguresOverview = styled.section`
 //     return (
 //       <div>
 //         <p>
-//           Today's Score: ttttttttttttttttttttttttttttttttttt
+//           Today's Score:
 //           {userInfos?.firstName}
 //         </p>
-//         <p>Calorie Count:eeeeeeeeeeeeeeeeeeeeeeeeeee {keyData?.calorieCount}</p>
+//         <p>Calorie Count:{keyData?.calorieCount}</p>
 //       </div>
 //     );
 //   }
