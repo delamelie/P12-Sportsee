@@ -41,7 +41,7 @@ export default function Sidebar() {
 
 const SidebarWrapper = styled.div`
   width: 120px;
-  height: 100%;
+  height: 100vh;
   position: absolute;
   left: 0;
   display: flex;

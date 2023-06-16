@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams, Navigate } from "react-router-dom";
+import styled from "styled-components";
+
 import {
   fetchUserMainData,
   fetchUserAverageSessions,
@@ -12,13 +14,13 @@ import Activity from "../models/Activity.js";
 import AverageSessions from "../models/AverageSessions.js";
 import Performance from "../models/Performance.js";
 
-import styled from "styled-components";
 import Profile from "../components/Profile";
 import DailyActivities from "../components/DailyActivities";
 import AverageSession from "../components/AverageSession";
 import Performances from "../components/Performances";
 import Score from "../components/Score";
 import FigureCard from "../components/FigureCard";
+
 import proteinsIcon from "../assets/protein-icon.png";
 import caloriesIcon from "../assets/calories-icon.png";
 import carbsIcon from "../assets/carbs-icon.png";
@@ -105,27 +107,19 @@ export default function Dashboard() {
     userPerformance && (
       <div className="container">
         <div>
-          <Profile firstName={userData && userData.firstName} />
+          <Profile firstName={userData.firstName} />
 
           <UserDataWrapper>
             <UserGraphs>
-              <DailyActivities
-                activities={userActivity && userActivity.sessions}
-              />
+              <DailyActivities activities={userActivity.sessions} />
               <SmallerGraphs>
                 <AverageSession
-                  averageSessions={
-                    userAverageSessions && userAverageSessions.sessions
-                  }
+                  averageSessions={userAverageSessions.sessions}
                 />
-                <Performances
-                  performances={
-                    userPerformance && userPerformance.getDataLabel()
-                  }
-                />
+                <Performances performances={userPerformance.getDataLabel()} />
                 <Score
-                  scorePercentage={userData && userData.getScore()}
-                  percentageArray={userData && userData.getScoreArray()}
+                  scorePercentage={userData.getScore()}
+                  percentageArray={userData.getScoreArray()}
                 />
               </SmallerGraphs>
             </UserGraphs>
@@ -133,22 +127,22 @@ export default function Dashboard() {
             <FiguresOverview>
               <FigureCard
                 title={"Calories"}
-                figure={`${userData && userData.getCalories()}kCal`}
+                figure={`${userData.getCalories()}kCal`}
                 icon={caloriesIcon}
               />
               <FigureCard
                 title={"Protéines"}
-                figure={`${userData && userData.getProteins()}g`}
+                figure={`${userData.getProteins()}g`}
                 icon={proteinsIcon}
               />
               <FigureCard
                 title={"Glucides"}
-                figure={`${userData && userData.getCarbohydrates()}g`}
+                figure={`${userData.getCarbohydrates()}g`}
                 icon={carbsIcon}
               />
               <FigureCard
                 title={"Lipides"}
-                figure={`${userData && userData.getLipids()}g`}
+                figure={`${userData.getLipids()}g`}
                 icon={fatIcon}
               />
             </FiguresOverview>
@@ -182,58 +176,3 @@ const FiguresOverview = styled.section`
   flex-direction: column;
   justify-content: space-between;
 `;
-
-// ///Test
-// import { Component } from "react";
-// import { fetchUserMainData } from "../api";
-
-// export default class Dashboard extends Component {
-//   constructor(props) {
-//     super(props);
-//     this.state = {
-//       userData: {},
-//     };
-//   }
-
-//   componentDidMount() {
-//     const { id } = this.props;
-
-//     fetchUserMainData(id)
-//       .then((response) => {
-//         const responseData = response.data;
-//         console.log("responseData");
-//         this.setState({ responseData });
-//         console.log(this.userData);
-//       })
-//       .catch((error) => {
-//         console.log("Error fetching user data:", error);
-//       });
-
-//     fetch(`http://localhost:3000/user/${id}`)
-//       .then((response) => response.json())
-//       .then((jsonResponse) => {
-//         //Formatage
-
-//         this.setState({ userData: jsonResponse?.data });
-//         console.log(jsonResponse);
-//       });
-//   }
-
-//   render() {
-//     const { userData } = this.state;
-//     console.log(this);
-//     console.log(this.state);
-
-//     const { userInfos, todayScore, keyData, id } = userData;
-
-//     return (
-//       <div>
-//         <p>
-//           Today's Score:
-//           {userInfos?.firstName}
-//         </p>
-//         <p>Calorie Count:{keyData?.calorieCount}</p>
-//       </div>
-//     );
-//   }
-// }
