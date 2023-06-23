@@ -37,6 +37,7 @@ export default function Dashboard() {
   const [userActivity, setUserActivity] = useState(null);
   const [userPerformance, setUserPerformance] = useState(null);
   const [error, setError] = useState(false);
+  const [apiError, setApiError] = useState(false);
 
   const { id } = useParams();
 
@@ -47,7 +48,11 @@ export default function Dashboard() {
         const userModel = new User(data);
         setUserData(userModel);
       } catch (error) {
-        setError(true);
+        if (error.message === "Failed to fetch") {
+          setApiError(true);
+        } else {
+          setError(true);
+        }
       }
     }
     getUserMainData();
@@ -60,7 +65,11 @@ export default function Dashboard() {
         const activityModel = new Activity(data);
         setUserActivity(activityModel);
       } catch (error) {
-        setError(true);
+        if (error.message === "Failed to fetch") {
+          setApiError(true);
+        } else {
+          setError(true);
+        }
       }
     }
     getUserActivity();
@@ -73,7 +82,11 @@ export default function Dashboard() {
         const averageSessionsModel = new AverageSessions(data);
         setUserAverageSessions(averageSessionsModel);
       } catch (error) {
-        setError(true);
+        if (error.message === "Failed to fetch") {
+          setApiError(true);
+        } else {
+          setError(true);
+        }
       }
     }
     getUserAverageSessions();
@@ -86,7 +99,11 @@ export default function Dashboard() {
         const userPerformanceModel = new Performance(data);
         setUserPerformance(userPerformanceModel);
       } catch (error) {
-        setError(true);
+        if (error.message === "Failed to fetch") {
+          setApiError(true);
+        } else {
+          setError(true);
+        }
       }
     }
     getUserPerformance();
@@ -96,6 +113,12 @@ export default function Dashboard() {
     return (
       <div>
         <Navigate to="/404" replace={true} />
+      </div>
+    );
+  } else if (apiError) {
+    return (
+      <div>
+        <ApiError>Le serveur est actuellement indisponible...</ApiError>
       </div>
     );
   }
@@ -152,6 +175,13 @@ export default function Dashboard() {
     )
   );
 }
+
+const ApiError = styled.h1`
+  display: flex;
+  justify-content: center;
+  margin-top: 100px;
+  font-size: 28px;
+`;
 
 const UserDataWrapper = styled.main`
   display: flex;

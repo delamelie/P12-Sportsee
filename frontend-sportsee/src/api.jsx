@@ -14,7 +14,6 @@ let callApi = true;
  */
 
 export async function fetchUserMainData(id) {
-  console.log(id);
   if (callApi) {
     const response = await fetch(`http://localhost:3000/user/${id}`);
     if (!response.ok) {
